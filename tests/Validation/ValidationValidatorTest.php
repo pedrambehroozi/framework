@@ -2946,7 +2946,7 @@ class ValidationValidatorTest extends TestCase
         $this->assertTrue($v->passes());
     }
 
-    public function testvalidateAlphaDash()
+    public function testValidateAlphaDash()
     {
         $trans = $this->getIlluminateArrayTranslator();
         $v = new Validator($trans, ['x' => 'asls1-_3dlks'], ['x' => 'AlphaDash']);
