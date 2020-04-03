@@ -1730,6 +1730,23 @@ trait ValidatesAttributes
     }
 
     /**
+     * Validates that an attribute is a valid username.
+     *
+     * @param   string  $attribute
+     * @param   mixed   $value
+     *
+     * @return  bool
+     */
+    public function validateUsername($attribute, $value)
+    {
+        if (! is_string($value) && ! is_numeric($value)) {
+            return false;
+        }
+
+        return preg_match('/^(?!\.)(?!.*\.$)(?!.*?\.\.)[\pL\pM\pN.\-_]+$/u', $value) > 0;
+    }
+
+    /**
      * Validate that an attribute is a valid UUID.
      *
      * @param  string  $attribute

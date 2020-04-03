@@ -2946,20 +2946,48 @@ class ValidationValidatorTest extends TestCase
         $this->assertTrue($v->passes());
     }
 
-    public function testValidateAlphaDash()
+    public function testvalidatealphadash()
     {
-        $trans = $this->getIlluminateArrayTranslator();
-        $v = new Validator($trans, ['x' => 'asls1-_3dlks'], ['x' => 'AlphaDash']);
-        $this->assertTrue($v->passes());
+        $trans = $this->getilluminatearraytranslator();
+        $v = new validator($trans, ['x' => 'asls1-_3dlks'], ['x' => 'alphadash']);
+        $this->asserttrue($v->passes());
 
-        $v = new Validator($trans, ['x' => 'http://-g232oogle.com'], ['x' => 'AlphaDash']);
-        $this->assertFalse($v->passes());
+        $v = new validator($trans, ['x' => 'http://-g232oogle.com'], ['x' => 'alphadash']);
+        $this->assertfalse($v->passes());
 
-        $v = new Validator($trans, ['x' => 'नमस्कार-_'], ['x' => 'AlphaDash']);
-        $this->assertTrue($v->passes());
+        $v = new validator($trans, ['x' => 'नमस्कार-_'], ['x' => 'alphadash']);
+        $this->asserttrue($v->passes());
 
-        $v = new Validator($trans, ['x' => '٧٨٩'], ['x' => 'AlphaDash']); // eastern arabic numerals
-        $this->assertTrue($v->passes());
+        $v = new validator($trans, ['x' => '٧٨٩'], ['x' => 'alphadash']); // eastern arabic numerals
+        $this->asserttrue($v->passes());
+    }
+    
+    public function testValidateUsername()
+    {
+        $trans = $this->getilluminatearraytranslator();
+        $v = new validator($trans, ['x' => 'asls.1-_3dlks'], ['x' => 'username']);
+        $this->asserttrue($v->passes());
+
+        $v = new validator($trans, ['x' => 'http-g232oogle.com'], ['x' => 'username']);
+        $this->asserttrue($v->passes());
+
+        $v = new validator($trans, ['x' => 'http..g232oogle.com'], ['x' => 'alphadash']);
+        $this->assertfalse($v->passes());
+
+        $v = new validator($trans, ['x' => 'नमस्.कार-_'], ['x' => 'username']);
+        $this->asserttrue($v->passes());
+
+        $v = new validator($trans, ['x' => '٧٨٩'], ['x' => 'username']); // eastern arabic numerals
+        $this->asserttrue($v->passes());
+
+        $v = new validator($trans, ['x' => 'user..name'], ['x' => 'username']); // eastern arabic numerals
+        $this->assertfalse($v->passes());
+
+        $v = new validator($trans, ['x' => '.username'], ['x' => 'username']); // eastern arabic numerals
+        $this->assertfalse($v->passes());
+
+        $v = new validator($trans, ['x' => 'username.'], ['x' => 'username']); // eastern arabic numerals
+        $this->assertfalse($v->passes());
     }
 
     public function testValidateTimezone()
